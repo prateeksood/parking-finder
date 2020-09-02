@@ -1,0 +1,16 @@
+.customAlert{
+    position:fixed;
+    right:10px;
+    bottom: 10px;
+    color:#D11C21;
+    padding:20px 50px;
+    background:#F4F2EF;
+    border-radius: 10px;
+    letter-spacing: 0.1rem;
+    box-shadow:2px 2px 10px #D11C21;
+    text-align: center;
+}
+.customAlert h1{
+    margin-bottom: 10px;
+    color:#0A183D;
+}

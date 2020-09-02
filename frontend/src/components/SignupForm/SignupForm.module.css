@@ -1,0 +1,148 @@
+.bgImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(10, 24, 61);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: darken;
+  min-height: 130vh;
+  height: 100%;
+  width: 100vw;
+  z-index: -1;
+}
+.container {
+  width: 90%;
+  margin: auto;
+  margin: 100px auto;
+}
+.formHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 88vh; */
+}
+.alertMsg{
+  color:rgb(240, 30, 30);
+  z-index: 200;
+  padding:10px;
+  background-color: rgb(255, 0, 0,0.3);
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+  margin: 20px 0;
+  position: relative;
+}
+.alertMsg i{
+  position: absolute;
+  right:20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.formHolder form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  height: 100%;
+  margin: auto;
+  background: rgba(139, 138, 138, 0.5);
+  padding: 20px 80px;
+  padding-top: 100px;
+  border-radius: 10px;
+}
+.formHolder .inputholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+  height: 50px;
+}
+.inputBox,
+input[type="submit"] {
+  width: 100%;
+  height: 100%;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: none;
+  color: black;
+  font-size: 1.6rem;
+}
+
+.inputBox {
+  border-bottom: 5px solid grey;
+  /* background:#D9E0EC; */
+  color: black;
+  transition: border-color 1s linear;
+}
+.inputBox:focus {
+  outline-style: none;
+  border-bottom: 5px dashed #0a183d;
+}
+.inputBox:focus + div {
+  border-bottom: 5px solid #d11c21;
+}
+.formHolder input[type="submit"] {
+  margin-top: 40px;
+  height: 50px;
+  transition: box-shadow 0.5s linear, background-image 1s linear;
+  background: linear-gradient(45deg, #d11c21, #640d0d);
+  cursor: pointer;
+  color: white;
+}
+.formHolder input[type="submit"]:hover {
+  box-shadow: inset 5px 5px 10px rgb(153, 22, 27);
+  transform: scale(0.98);
+}
+.formHolder input[type="submit"]:focus {
+  outline: none;
+}
+.topIcon {
+  position: absolute;
+  top: 0;
+  transform: translateY(95%);
+  background: linear-gradient(to right, #0a183d, #006c96, #0a183d);
+  border-radius: 50%;
+  border: 2px solid #d11c21;
+}
+.validationError {
+  border-left: 2px solid #d11c21;
+  border-bottom: 5px solid #d11c21;
+  border-top: 2px solid #d11c21;
+  border-radius: 10px 0 0 10px;
+}
+.validationError:focus {
+  border-bottom: 5px dashed #d11c21;
+}
+.validationError:focus + .errorMsg {
+  border-bottom: 5px dashed #d11c21;
+}
+.errorMsg {
+  color: red;
+  font-size: 1.9rem;
+  padding: 0 10px;
+  cursor: pointer;
+  border-right: 2px solid #d11c21;
+  border-bottom: 5px solid #d11c21;
+  border-top: 2px solid #d11c21;
+  border-radius: 0 10px 10px 0;
+  background-color: white;
+  height: 50px;
+  transition: border-color 1s linear;
+}
+.errorMsg span {
+  display: none;
+  position: absolute;
+  background: white;
+  color: #d11c21;
+  font-size: 1.2rem;
+  padding: 5px;
+  border-radius: 5px;
+}
+.errorMsg:hover span {
+  display: block;
+}

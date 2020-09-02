@@ -1,0 +1,140 @@
+.reviewContainer {
+    
+    padding: 50px 0;
+}
+.avgRating{
+    display: flex;
+    justify-content: flex-start;
+    align-items:center;
+    margin-bottom: 20px;
+}
+.avgStars{
+    font-size:3rem;
+    color:#FFA500;
+}
+.inputStars{
+    font-size:5rem;
+    color:#5c5a58;
+    text-align: center;
+}
+.inputStars i{
+    cursor: pointer;
+}
+.reviewerCount{
+    font-size:2.5rem;
+    color:#070707;
+    margin-left: 10px;
+}
+.leaveAReview{
+    margin-top:30px;
+    width: 50%;
+    min-width:430px;
+    margin: auto;
+}
+.leaveAReview input{
+    width:100%;
+    height:5vh;
+    padding:3vh;
+    font-size: 1.5rem;
+}
+.leaveAReview textarea{
+    margin-top: 20px;
+    width:100%;
+    height:20vh;
+    padding:3vh;
+    font-size: 1.5rem;
+}
+.leaveAReview textarea::placeholder{
+    font-size: 3rem;
+    text-align: center;
+    line-height: 15vh;
+
+}
+.errorMsg{
+    color:red;
+}
+.submitReviewButton{
+    margin: 20px 0;
+    display: flex;
+    justify-content: flex-end;
+}
+button:disabled{
+    cursor: not-allowed;
+}
+.submitReviewButton button{
+    text-align: center;
+    color:white;
+    border-radius: 5px;
+    margin:10px 0;
+    padding:7px 10px;
+    background: #D11C21;
+    border:2px solid transparent;
+    width:200px;
+    cursor: pointer;
+}
+.reviews{
+    background: #EBEAE9;
+    padding: 10px;
+    width: 50%;
+    min-width:430px;
+    margin: 30px auto;
+}
+.reviewSingle {
+    padding:10px;
+    border-bottom: 2px solid rgb(214, 219, 221);
+    margin-bottom: 10px;
+}
+.reviewHead{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:20px 0;
+}
+.reviewHead .title{
+    font-size: 2rem;
+    font-weight: 900;
+    color:#0A183D;
+
+}
+.reviewHead .stars{
+    color:#0A183D;
+}
+.bottomBar{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+.reviewerName{
+    color:#D11C21;
+    display:flex;
+    align-items: center;
+}
+.reviewEditDelBtn{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+.reviewEditDelBtn button{
+    cursor: pointer;
+    max-width:90px;
+    min-width:70px;
+    text-align: center;
+    font-size: .7rem;
+    color:white;
+    /* margin-bottom: 10px; */
+    border-radius: 5px;
+    margin-right: 10px;
+    padding:7px 10px;
+    background: #D11C21;
+    border:2px solid transparent;
+}
+.reviewEditDelBtn button:nth-of-type(2){
+    background: #54cf54;
+    border:2px solid transparent;   
+}
+@media only screen and (max-width:850px){
+    .inputStars{
+        font-size:3.5rem;
+    }
+}

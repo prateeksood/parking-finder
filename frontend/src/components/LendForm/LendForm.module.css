@@ -1,0 +1,111 @@
+#step-form-bg{
+    position: absolute;
+    top:0;
+    left:0;
+   background-color: #0A183D;
+   background-size:cover;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-blend-mode: darken;
+   min-height:130vh;
+   height:100%;
+   width:100vw;
+   z-index:-1;
+}
+.stepFormContainer{
+    width:90%;
+    margin:auto;
+    margin:50px auto;
+}
+.card{
+    background: rgba(139, 138, 138,0.5);
+    width:90%;
+    max-width:1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:0 50px;
+    border-radius:20px;
+}
+.card .title{
+    color:#E1E6E8;
+    font-size: 1.5rem;
+    padding:20px 0;
+}
+.card .steps{
+    width:100%;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    padding:20px 0;
+}
+.card .steps div{
+    color:#d11c21;
+    /* border:2px solid #D11C21; */
+    align-items: center;
+    background:#E1E6E8 ;
+    width:60px;
+    height:60px;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 50%;
+    font-weight: 900;
+}
+.card .steps .currentStep{
+    background: #D11C21;
+    color:#E1E6E8
+}
+.card .stepFormHolder{
+    width: 100%;;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:20px 0;
+}
+.card .stepFormHolder form {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card .stepFormHolder input:focus{
+    outline-style: none;
+}
+.stepFormContainer .card .prevNextButtons{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top:40px;
+}
+.stepFormContainer .card .prevNextButtons button{
+    margin-left:30px;
+    padding: 10px;
+    width:70px;
+    height: 70px;
+    font-size: 1.3rem;
+    border-radius: 50%;
+    border: none;
+    border:2px solid #D11C21;
+    color:#D11C21;
+    cursor: pointer;
+}
+.stepFormContainer .card .prevNextButtons button:disabled{
+    border:2px solid #ac5e61;
+    color:#ac5e61;
+    background: #999090;
+    cursor: not-allowed;
+}
+.stepFormContainer .card .prevNextButtons button:focus{
+    outline: none;
+}
+@media only screen and (max-width:850px) {
+    .graphicHolder{
+        display: none;
+    }
+    .card .stepFormHolder input{
+        width: 100%;
+        margin:auto;
+    }
+}

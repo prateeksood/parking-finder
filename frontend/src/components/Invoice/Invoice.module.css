@@ -1,0 +1,73 @@
+.bookSectionOne {
+    width:100%;
+    max-width: 1000px;
+    margin: auto;
+}
+.ordersHeading{
+    font-size:3.5rem;
+    color:#f4f2ef;
+    border-bottom: 2px solid #D11C21;
+    display: flex;
+    flex-direction: row;
+}
+.ordersHeading span{
+    margin-right:20px;
+    color:#D11C21;
+    cursor: pointer;
+}
+.invoiceHolder{
+    background: white;
+    width:90%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding:10px 10px 40px 10px;
+}
+
+.invoiceHeader{
+    font-size:2rem;
+    font-weight: 600;
+    padding: 10px;
+    background-color:black;
+    color:#f4f2ef;
+    text-align: center;
+    
+}
+.companyName div{
+    font-size: 2rem;
+    font-family: 'Pacifico', cursive;
+    color:black;
+    text-align: center;
+}
+.companyName span{
+    font-family: 'Pacifico', cursive;
+    color:#d11c21;
+}
+.topDeatails{
+    padding:10px;
+}
+.orderDetail{
+    padding:5px;
+}
+.invoiceHolder table{
+    margin-bottom: 40px;
+    width: 100%;
+}
+.invoiceHolder td,.invoiceHolder th{
+    border: 2px solid black;
+    color:black;
+    text-align: center;
+}
+.invoiceHolder th{
+    background: rgb(182, 179, 179);
+    /* color:white; */
+}
+hr{
+    height: 5px;
+    background: black;
+    margin-top: 5px;
+}
+@media only screen and (max-width:850px) {
+        table{
+            font-size: .7rem;
+        }
+  }  

@@ -1,0 +1,46 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family:'Poppins',sans-serif;
+}
+button,a{
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+button:hover,a:hover{
+  transform: scale(0.98);
+}
+button:disabled{
+  cursor: not-allowed;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+}
+::-webkit-scrollbar-thumb {
+  background:linear-gradient(45deg,#d11c21,#e2454a,#d11c21);
+  border-radius: 50px;
+}
+body{
+  
+  background: #0A183D;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  position: relative;
+  height:100vh;
+}
+.container{
+  width:90%;
+  margin:50px auto;
+}
+.mapboxgl-ctrl-geocoder--icon{
+  display: none;
+}
+.validation-error{
+  background-color: red;
+}

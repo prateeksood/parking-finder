@@ -1,0 +1,95 @@
+.loader {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.carBody {
+    animation: shake 0.2s ease-in-out infinite alternate;
+}
+.carLine {
+    transform-origin: center right;
+    stroke-dasharray: 22;
+    animation: line 0.8s ease-in-out infinite;
+    animation-fill-mode: both;
+}
+.carLineTop {
+    animation-delay: 0s;
+}
+.carLineMiddle {
+    animation-delay: 0.2s;
+}
+.carLineBottom {
+    animation-delay: 0.4s;
+}
+.LoadingText{
+    color:white;
+    font-size: 2rem;
+    padding-left: 3rem;
+    margin-top: 20px;
+}
+.dotOne{
+    animation: dotOne 3s ease-in-out infinite;
+}
+.dotTwo{
+    animation: dotTwo 3s ease-in-out infinite;
+}
+.dotThree{
+    animation: dotThree 3s ease-in-out infinite ;
+}
+@keyframes dotOne{
+    0%{
+        opacity:0;
+    }
+    25%{
+        opacity: 1;
+    }
+}
+@keyframes dotTwo{
+    0%{
+        opacity:0;
+    }
+    50%{
+        opacity: 1;
+    }
+}
+@keyframes dotThree{
+    0%{
+        opacity:0;
+    }
+    75%{
+        opacity: 1;
+    }
+}
+@keyframes shake {
+    0% {
+        transform: translateY(-1%);
+   }
+    100% {
+        transform: translateY(3%);
+   }
+}
+@keyframes line {
+    0% {
+        stroke-dashoffset: 22;
+   }
+    25% {
+        stroke-dashoffset: 22;
+   }
+    50% {
+        stroke-dashoffset: 0;
+   }
+    51% {
+        stroke-dashoffset: 0;
+   }
+    80% {
+        stroke-dashoffset: -22;
+   }
+    100% {
+        stroke-dashoffset: -22;
+   }
+}

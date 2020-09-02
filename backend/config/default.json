@@ -1,0 +1,3 @@
+{
+    "jwtSecret":"my_jwt_secret_123"
+}

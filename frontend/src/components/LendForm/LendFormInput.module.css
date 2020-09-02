@@ -1,0 +1,57 @@
+
+.input{
+    width:35vw;
+    height:70px;
+    padding:20px;
+    font-size: 2rem;;
+    border-radius: 50px;
+    border: 2px #D11C21 solid ;
+    margin-left:10px;
+}
+.input[type="file"]{
+    display: none;
+}
+.errorMsg{
+    padding:10px;
+    font-size: 1.5rem;
+    margin-left:10px;
+    color:#D11C21;
+}
+.mapcontainer{
+    position:relative;
+    height:40vh;
+    width:35vw;
+}
+.addImg{
+    display: flex;
+    flex-wrap: wrap;
+    padding:10px;
+}
+.addImgBtn{
+    width:100%;
+    height:70px;
+    padding:20px;
+    font-size: 1rem;;
+    border-radius: 50px;
+    border: 2px #D11C21 solid ;
+    margin-left:10px;
+    color:white;
+}
+.thumb{
+    width:100px;
+    height:100px;
+    margin:0 0 10px 10px;
+}
+@media only screen and (max-width:850px) {
+    .input{
+        width: 100%;
+        margin:auto;
+    }
+    .card .stepFormHolder .addImgBtn{
+        width: 61vw;
+        margin:auto;
+    }
+    .mapcontainer{
+        width:65vw;
+    }
+}
