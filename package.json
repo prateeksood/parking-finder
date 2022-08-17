@@ -4,8 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "postinstall": "npm run webpack",
-   "webpack": "webpack",
     "start": "node index.js",
     "backend": "nodemon app.js",
     "frontend": "npm run start --prefix ../frontend",
