@@ -15,7 +15,7 @@ const app=express();
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({extended:true}));
-app.use(express.static("frontend/build"));
+app.use(express.static("./frontend/build"));
 app.use('/api/images',express.static('images'));
 app.use('/api/auth',auth);
 app.use('/api/register',register);
