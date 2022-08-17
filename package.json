@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon backend/app.js",
+    "start": "node index.js",
     "backend": "nodemon app.js",
     "frontend": "npm run start --prefix ../frontend",
     "test": "echo \"Error: no test specified\" && exit 1"
