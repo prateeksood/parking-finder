@@ -20,8 +20,12 @@ export default (props)=>{
     const history=useHistory();
     useEffect(()=>{
         if(user){
-            axios.delete(`http://localhost:2800/cleanup`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            axios.delete(`/api/cleanup/unpaid`,{headers:{'x-auth-token':localStorage.getItem("token")}})
             .then(console.log('Cleanup done'))
+            .catch(err=>console.log(err.message));
+            
+            axios.put(`/api/cleanup/inactive`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            .then(console.log('Inactive Orders marked'))
             .catch(err=>console.log(err));
         }
     },[user])
@@ -29,10 +33,10 @@ export default (props)=>{
         if(user){
             setIsLoading(true)
             let url;
-            user.isAdmin?url=`http://localhost:2800/parkings`:url=`http://localhost:2800/parkings/owner/${user.id}`;
+            user.isAdmin?url=`/api/parkings`:url=`/api/parkings/find/all/by-owner-id/${user.id}`;
             axios.get(url)
             .then(res=>{
-                setParkings(res.data)
+                setParkings(res.data.result.parkings)
                 setIsLoading(false);
             })
             .catch(err=>console.log(err));
@@ -108,7 +112,7 @@ export default (props)=>{
                                             {increaseCount()}
                                             <div className={styles.card}>
                                                 <div className={styles.imgHolder}>
-                                                    <img src={parking.images[0]?(`http://localhost:2800/images/${parking.images[0].url}`):placeholderImg} alt="parking"/>
+                                                    <img src={parking.images[0]?(`/api/images/${parking.images[0].url}`):placeholderImg} alt="parking"/>
                                                 </div>
                                                 <div className={styles.title}>{`${parking.title.slice(0,12)}`}{parking.title.length>13&& ' . . .'}</div>
                                                 <div className={styles.location}>{parking.city}</div>

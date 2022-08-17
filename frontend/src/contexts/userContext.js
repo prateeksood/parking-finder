@@ -18,9 +18,9 @@ export default props => {
           "x-auth-token": token
         }
       };
-      axios.get("http://localhost:2800/auth/user", config)
+      axios.get("/api/auth/user", config)
       .then(res => {
-      setUser(res.data.user);
+      setUser(res.data.result.user);
       setUserLoaded(true);
     })
       .catch(err=>console.log(err));

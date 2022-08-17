@@ -9,8 +9,12 @@ export default () => {
   const {user} = useContext(userContext);
   useEffect(()=>{
     if(user){
-        axios.delete(`http://localhost:2800/cleanup`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+        axios.delete(`/api/cleanup/unpaid`,{headers:{'x-auth-token':localStorage.getItem("token")}})
         .then(console.log('Cleanup done'))
+        .catch(err=>console.log(err.message));
+        
+        axios.put(`/api/cleanup/inactive`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+        .then(console.log('Inactive Orders marked'))
         .catch(err=>console.log(err));
     }
   },[user])
@@ -58,7 +62,7 @@ export default () => {
               <Link to="/book">Find a space</Link>
             </li>
             <li className={styles.navButtons}>
-              <Link to="lend">Lend your space</Link>
+              <Link to="/lend">Lend your space</Link>
             </li>
             <li className={`${styles.burgerMenu} ${styles.fixedBurgerMenu}`}>
               <div></div>
@@ -78,7 +82,7 @@ export default () => {
               </div>
               <div className={styles.buttons}>
                 <Link to="/book">Find a space</Link>
-                <Link to="lend">Lend your space</Link>
+                <Link to="/lend">Lend your space</Link>
               </div>
             </div>
             <div className={styles.rightSec}>

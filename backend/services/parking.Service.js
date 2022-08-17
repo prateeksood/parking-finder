@@ -37,6 +37,7 @@ const getAllParkingsService= async (callBack)=>{
 
     }catch(err){
 
+        console.log(err);
         return callBack(err.message, 500);
     }   
 

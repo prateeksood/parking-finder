@@ -23,17 +23,17 @@ export default () => {
       password: values.password,
       contactNumber: values.contactNumber
     };
-    axios.post("http://localhost:2800/auth/signup", data).then(res => {
-      if (!res.data.isError) {
-        localStorage.setItem("token", res.data.token);
-        setUser(res.data.user);
+    axios.post("/api/register", data).then(res => {
+      if (!res.data.error) {
+        localStorage.setItem("token", res.data.result.token);
+        setUser(res.data.result.user);
         setSignupError(null);
-        setAlertMsg({heading:'Signup Successful',lead:`Welcome ${res.data.user.fullname}`});
+        setAlertMsg({heading:'Signup Successful',lead:`Welcome ${res.data.result.user.fullname}`});
         setSignupSuccess(true);
       } else {
         localStorage.removeItem("token");
         setUser(null);
-        setSignupError(res.data.message);
+        setSignupError(res.data.error);
       }
     });
   };

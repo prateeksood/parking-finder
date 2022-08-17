@@ -17,15 +17,14 @@ export default(props)=>{
                 setRatingError(null);
                 let {reviewHead,reviewBody}=values;
                 const data = {review:{reviewHead,reviewBody,rating,authorId:user.id,authorName:user.fullname}};
-                axios.post(`http://localhost:2800/review/${parking.id}`, data,{headers:{'x-auth-token':localStorage.getItem("token")}})
+                axios.post(`/api/review/${parking.id}`, data,{headers:{'x-auth-token':localStorage.getItem("token")}})
                 .then(res => {
-                  if (!res.data.isError) {
-                    setReviews(prev=>[...prev,res.data.review]);
+                  if (!res.data.error) {
+                    setReviews(prev=>[...prev,res.data.result.review]);
                     setAlertMsg({heading:'Review added',lead:`Your review was successfully added`});
                     setRating(0);
                     clearValues();
-                  } else {
-                  }
+                  } 
                 })
                 .catch(err=>console.log(err));
             }else{
@@ -97,7 +96,7 @@ export default(props)=>{
     const deleteReview=(id,index)=>{
         let confirmed=window.confirm("Are you sure? Pressing Ok will parmanently delete your review. ")
         if(confirmed){
-            axios.delete(`http://localhost:2800/review/${id}`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            axios.delete(`/api/review/${id}`,{headers:{'x-auth-token':localStorage.getItem("token")}})
             .then(reviews.splice(index,1))
         }
     }

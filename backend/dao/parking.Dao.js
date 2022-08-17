@@ -1,7 +1,7 @@
 const db=require('../db');
 
 const selectAllParkings=async ()=>{
-    let query="SELECT * FROM parkingDetails";
+    let query="SELECT * FROM parkingdetails";
     try{
         let foundParkings=await db.query(query);
         return foundParkings;
@@ -11,7 +11,7 @@ const selectAllParkings=async ()=>{
 }
 
 const getParkingsByParkingId=async (id)=>{
-    let query=`SELECT * FROM parkingDetails where id in (${id})`;
+    let query=`SELECT * FROM parkingdetails where id in (${id})`;
     try{
         let foundParkings=await db.query(query);
         return foundParkings;
@@ -21,7 +21,7 @@ const getParkingsByParkingId=async (id)=>{
 }
 
 const getParkingsByUserId=async (id)=>{
-    let query=`SELECT * FROM parkingDetails where ownerId in (${id}) AND isActive=1 ORDER BY id`;
+    let query=`SELECT * FROM parkingdetails where ownerId in (${id}) AND isActive=1 ORDER BY id`;
     try{
         let foundParkings=await db.query(query);
         return foundParkings;

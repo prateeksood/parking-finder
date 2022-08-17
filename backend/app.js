@@ -1,4 +1,5 @@
 const express=require('express');
+const path = require('path');
 const cors=require('cors');
 const order =require('./routes/order.Route');
 const auth=require('./routes/auth.Route')
@@ -8,20 +9,31 @@ const review =require('./routes/review.Route');
 const parkings =require('./routes/parking.Route');
 const uploadImg =require('./routes/uploadImg.Route');
 const cleanup =require('./routes/cleanup.Route');
+const PORT=process.env.PORT ||2800;
 const app=express();
+
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({extended:true}));
-app.use('/images',express.static('images'));
-app.use('/auth',auth);
-app.use('/register',register);
-app.use('/login',login);
-app.use('/order',order);
-app.use('/parkings',parkings);
-app.use('/review',review);
-app.use('/uploadImg',uploadImg);
-app.use('/cleanup',cleanup);
+app.use(express.static("frontend/build"));
+app.use('/api/images',express.static('images'));
+app.use('/api/auth',auth);
+app.use('/api/register',register);
+app.use('/api/login',login);
+app.use('/api/order',order);
+app.use('/api/parkings',parkings);
+app.use('/api/review',review);
+app.use('/api/uploadImg',uploadImg);
+app.use('/api/cleanup',cleanup);
 
-app.listen(2800,()=>{
-    console.log('server started');
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend", "build", "index.html"));
+  });
+// const root = require('path').join(__dirname, '../frontend', 'build')
+// app.use(express.static(root));
+// app.get("*", (req, res) => {
+//     res.sendFile('index.html', { root });
+// })
+app.listen(PORT,()=>{
+    console.log(`server started at port ${PORT}`);
 })

@@ -23,18 +23,18 @@ export default (props) => {
       email: values.email,
       password: values.password
     };
-    axios.post("http://localhost:2800/auth/login", data)
+    axios.post("/api/login", data)
     .then(res => {
-      if (!res.data.isError) {
-        localStorage.setItem("token", res.data.token);
-        setUser(res.data.user);
+      if (!res.data.error) {
+        localStorage.setItem("token", res.data.result.token);
+        setUser(res.data.result.user);
         setLoginError(null);
-        setAlertMsg({heading:'Login Successful',lead:`Welcome back ${res.data.user.fullname}`});
+        setAlertMsg({heading:'Login Successful',lead:`Welcome back ${res.data.result.user.fullname}`});
         setLoginSuccess(true);
       } else {
         localStorage.removeItem("token");
         setUser(null);
-        setLoginError(res.data.message);
+        setLoginError(res.data.error);
       }
     })
     .catch(err=>console.log(err));

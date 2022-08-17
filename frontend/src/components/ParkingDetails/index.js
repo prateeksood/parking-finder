@@ -1,7 +1,7 @@
-import React,{useState, useEffect,useRef, useContext} from 'react'
-import axios from 'axios'
-import mapboxgl from 'mapbox-gl'
-import {Link,useParams, Redirect,useLocation,useHistory} from 'react-router-dom'
+import React,{useState, useEffect,useRef, useContext} from 'react';
+import axios from 'axios';
+import mapboxgl from 'mapbox-gl';
+import {Link,useParams, Redirect,useLocation,useHistory} from 'react-router-dom';
 import styles from './ParkingDetails.module.css';
 import { userContext } from '../../contexts/userContext';
 import Reviews from '../Reviews';
@@ -41,18 +41,19 @@ export default(props)=>{
     });
     useEffect(()=>{
         if(user){
-            axios.delete(`http://localhost:2800/cleanup`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            axios.delete(`/api/cleanup/unpaid`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            .then(
+              axios.put(`/api/cleanup/inactive`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            )
             .then(console.log('Cleanup done'))
             .catch(err=>console.log(err));
         }
-    },[user])
+      },[user])
     useEffect(()=>{
         if(user&&parking){
             axios.get(`https://eu1.locationiq.com/v1/reverse.php?key=703dcce5586a29&lon=${parking.lon}&lat=${parking.lat}&format=json`)
             .then(res=>{
                 let {address}=res.data;
-                console.log(address);
-                // address.neighbourhood||
                 setArea(`${address.village||address.town||address.suburb||address.hamlet||address.locality||address.county||address.city}, ${address.state_district}`);
             })
             .catch(err=>console.log(err));
@@ -60,18 +61,19 @@ export default(props)=>{
     },[user,parking]);
     useEffect(()=>{
         if(userLoaded){
-            axios.get(`http://localhost:2800/parkings/${id}`)
+            axios.get(`/api/parkings/find/all/by-parking-id/${id}`)
             .then(res=>{
-                setParking(res.data);
+                console.log();
+                setParking(res.data.result.parking);
                 if(user){
-                    axios.get(`http://localhost:2800/order/parking/active/${id}`)
+                    axios.get(`/api/order/find/active/by-parking-id/${id}`)
                     .then(orders=>{
                         let count=0;
-                        orders.data.forEach(order => {
+                        orders.data.result.orders.forEach(order => {
                             count+=(order.bookingSpots); 
                         });
                         setParking(prev=>({...prev,activeOrders:count}));
-                        setDestination([res.data.lon,res.data.lat]); 
+                        setDestination([res.data.result.parking.lon,res.data.result.parking.lat]); 
                     }) 
                 }
                 setIsLoading(false);
@@ -101,20 +103,6 @@ export default(props)=>{
                     ,'top-right');
                 map.addControl(new mapboxgl.FullscreenControl(),'bottom-right');
                 map.addControl(new mapboxgl.NavigationControl(),'top-left');
-                map.addControl(new mapboxgl.GeolocateControl({
-                    positionOptions: {
-                    enableHighAccuracy: true
-                    }
-                    })
-                    .on('geolocate',(position)=>{
-                        setOrigin([position.coords.longitude.toString(),position.coords.latitude.toString()])
-                        map.flyTo({
-                            center:[position.coords.longitude,position.coords.latitude],
-                            zoom:14,
-                            essential:true
-                        })
-                    })
-                );
                 directionBox.setDestination([parking.lon,parking.lat])
                 map.addControl(directionBox);
                 marker
@@ -122,16 +110,13 @@ export default(props)=>{
                     .addTo(map);
         
                 map.on('click', () => {
-                    // map.on('move',()=>{
                         setTimeout(()=>{
                             if(directionBox.getDestination().geometry.coordinates!==destination){
                                 directionBox.setDestination(destination);
                             }
                         },300)
-                        
-                    // }) 
-                });
-        }  
+                }); 
+            }  
     },[parking,isLoading,destination,user])
 
     useEffect(()=>{
@@ -148,7 +133,7 @@ export default(props)=>{
     const disableParking=()=>{
         let confirmed=window.confirm("Are you sure? Pressing Ok will parmanently delete this parking. ")
         if(confirmed){
-            axios.put(`http://localhost:2800/parkings/disable/${id}`,{},{headers:{'x-auth-token':localStorage.getItem("token")}})
+            axios.put(`/api/parkings/disable/${id}`,{},{headers:{'x-auth-token':localStorage.getItem("token")}})
             .then(res=>res.status===200&&setDeleted(true))
         }
     }

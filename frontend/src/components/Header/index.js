@@ -113,10 +113,10 @@ export default () => {
       {!user? 
         (
           <React.Fragment>
-            <li>
+            <li onClick={closePhnMenu}>
               <NavLink to="/login" activeStyle={{color: "#D11C21"}}>Login</NavLink>
             </li>
-            <li>
+            <li onClick={closePhnMenu}>
               <NavLink to="/signup" activeStyle={{color: "#D11C21" }}>Signup</NavLink>
             </li>
           </React.Fragment>

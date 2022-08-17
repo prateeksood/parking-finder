@@ -27,8 +27,12 @@ export default props => {
   let loc=useLocation();
   useEffect(()=>{
     if(user){
-        axios.delete(`http://localhost:2800/cleanup`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+        axios.delete(`/api/cleanup/unpaid`,{headers:{'x-auth-token':localStorage.getItem("token")}})
         .then(console.log('Cleanup done'))
+        .catch(err=>console.log(err.message));
+        
+        axios.put(`/api/cleanup/inactive`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+        .then(console.log('Inactive Orders marked'))
         .catch(err=>console.log(err));
     }
   },[user])
@@ -68,7 +72,7 @@ export default props => {
         owner: user.id
       };
       if(loc.pathname==='/updateParking'){
-        axios.put(`http://localhost:2800/parkings/${values.id}`, data,{headers:{'x-auth-token':localStorage.getItem("token")}})
+        axios.put(`/api/parkings/update/${values.id}`, data,{headers:{'x-auth-token':localStorage.getItem("token")}})
         .then(res => {
           if (res.status === 200) {
             setTimeout(()=>{
@@ -81,7 +85,7 @@ export default props => {
           alert(`unknown error ${err}`);
         });
       }else{
-        axios.post(`http://localhost:2800/parkings`, data,{headers:{'x-auth-token':localStorage.getItem("token")}})
+        axios.post(`/api/parkings`, data,{headers:{'x-auth-token':localStorage.getItem("token")}})
         .then(res => {
           if (res.status === 200) {
             setTimeout(()=>{
@@ -114,7 +118,7 @@ export default props => {
       }
     };
     axios
-      .post("http://localhost:2800/uploadImg", formData, config)
+      .post("/api/uploadImg", formData, config)
       .then(response => {
         setImages(response.data.location);
         alert("Images successfully uploaded");

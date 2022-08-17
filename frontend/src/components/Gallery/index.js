@@ -1,8 +1,10 @@
 import React,{useState} from 'react';
 import styles from './Gallery.module.css';
+import { TimelineMax } from "gsap";
 
 export default(props)=>{
     let {parking}=props;
+
     const [index,setIndex]=useState(0);
     
     const changeImg=(index)=>{
@@ -15,6 +17,7 @@ export default(props)=>{
         })
         thumbImgs[index].style.filter="grayscale(0)";
         thumbImgs[index].style.transform="scale(1)";
+
         displayImg.children[0].setAttribute('src',thumbImgs[index].children[0].getAttribute('src'));
     }
 
@@ -33,6 +36,28 @@ export default(props)=>{
         }else{
             tempIndex=index-1;
         }
+        const Timeline = new TimelineMax();
+        Timeline
+        .from("#display-img", .1, {
+            autoAlpha:0,
+            x: 0
+        })
+        .to(
+            "#display-img",
+            0.1,
+            {
+                x:"-1000",
+                autoAlpha:0
+            }
+        )
+        .to(
+            "#display-img",
+            0.2,
+            {
+                x: 0,
+                autoAlpha:1
+            }
+        )
         changeImg(tempIndex);
         setIndex(tempIndex);
     }
@@ -45,6 +70,28 @@ export default(props)=>{
         }else{
             tempIndex=0;
         }
+        const Timeline = new TimelineMax();
+        Timeline
+        .from("#display-img", .1, {
+            autoAlpha:0,
+            x: 0
+        })
+        .to(
+            "#display-img",
+            0.1,
+            {
+                x:"1000",
+                autoAlpha:0
+            }
+        )
+        .to(
+            "#display-img",
+            0.2,
+            {
+                x: 0,
+                autoAlpha:1
+            }
+        )
         changeImg(tempIndex);
         setIndex(tempIndex);
     }
@@ -57,7 +104,7 @@ export default(props)=>{
         <React.Fragment>
         <div className={styles.imageGallery}>
             { parking.images&&(parking.images.map((img,index)=>(
-                    <div key={index} className={styles.singleImg} onClick={()=>thumbClick(index)}><img src={`http://localhost:2800/images/${img.url}`} data-index="0" alt="parking img"/></div>
+                    <div key={index} className={styles.singleImg} onClick={()=>thumbClick(index)}><img src={`/api/images/${img.url}`} data-index="0" alt="parking img"/></div>
                 )))
             }
         </div>
@@ -68,7 +115,7 @@ export default(props)=>{
 
                     {
                         parking.images.map((img,index)=>(
-                            <div key={index} className={`${styles.singleThumb} thumbnail`} onClick={()=>thumbClick(index)}><img src={`http://localhost:2800/images/${img.url}`}alt="parking"/></div>
+                            <div key={index} className={`${styles.singleThumb} thumbnail`} onClick={()=>thumbClick(index)}><img src={`/api/images/${img.url}`}alt="parking"/></div>
                         ))
                     }
                 </div>

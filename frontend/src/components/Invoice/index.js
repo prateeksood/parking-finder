@@ -15,19 +15,19 @@ export default (props)=>{
     const monthName = ['January','February','March','April','May','June','July','August','September','October','November','December']
     useEffect(()=>{
         if(user){
-                axios.get(`http://localhost:2800/order/${id}`)
+                axios.get(`/api/order/find/all/by-order-id/${id}`)
                 .then(foundOrder=>{
-                    foundOrder=foundOrder.data[0];
+                    foundOrder=foundOrder.data.result.orders[0];
                     setOrder(foundOrder);
-                    axios.get(`http://localhost:2800/parkings/${foundOrder.parkingId}`)
+                    axios.get(`/api/parkings/find/all/by-parking-id/${foundOrder.parkingId}`)
                     .then(foundParking=>{
-                        let parking=foundParking.data;
+                        let parking=foundParking.data.result.parking;
                         setParkings(parking);
                     })
                     .catch(err=>console.log(err));
-                    axios.get(`http://localhost:2800/auth/user/${foundOrder.tenantId}`)
+                    axios.get(`/api/auth/user/${foundOrder.tenantId}`)
                     .then(foundUser=>{
-                        setRecipient(foundUser.data.user);
+                        setRecipient(foundUser.data.result.user);
                     })
                     .catch(err=>console.log(err));
                 })

@@ -146,3 +146,13 @@ input[type="submit"] {
 .errorMsg:hover span {
   display: block;
 }
+@media only screen and (max-width:850px) {
+  .topIcon {
+    position: absolute;
+    top: 0;
+    transform: translateY(60%);
+    background: linear-gradient(to right, #0a183d, #006c96, #0a183d);
+    border-radius: 50%;
+    border: 2px solid #d11c21;
+  }
+}

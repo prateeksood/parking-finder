@@ -41,7 +41,6 @@
 .mainContent{
     display:flex;
     justify-content: space-around;
-
 }
 .map{
     width:70%;
@@ -63,7 +62,7 @@
     /* border-left:2px solid rgb(197, 194, 194); */
 }
 .parkingTitle{
-    font-size:3rem;
+    font-size:2.5rem;
     font-weight: 600;
 }
 .location{

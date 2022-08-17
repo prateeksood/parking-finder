@@ -18,7 +18,7 @@ export default(props)=>{
 
     useEffect(()=>{
         if(user){
-            axios.delete(`http://localhost:2800/cleanup`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            axios.delete(`/api/cleanup`,{headers:{'x-auth-token':localStorage.getItem("token")}})
             .then(console.log('Cleanup done'))
             .catch(err=>console.log(err));
         }
@@ -26,14 +26,15 @@ export default(props)=>{
 
     useEffect(()=>{
         if(userLoaded){
-            axios.get(`http://localhost:2800/parkings/${id}`)
+            axios.get(`/api/parkings/find/all/by-parking-id/${id}`)
             .then(res=>{
                 if(user){
-                setParking(res.data);
-                axios.get(`http://localhost:2800/order/parking/active/${id}`)
-                .then(orders=>{
+                setParking(res.data.result.parking);
+                axios.get(`/api/order/find/active/by-parking-id/${id}`)
+                .then(res=>{
+                    let orders=res.data.result.orders
                     let count=0;
-                    orders.data.forEach(order => {
+                    orders.forEach(order => {
                         count+=(order.bookingSpots); 
                     });
                     setParking(prev=>({...prev,activeOrders:count}));
@@ -75,8 +76,9 @@ export default(props)=>{
         if(data.total>500000){
             alert('Your order total cannot exceed 5,00,000')
         }else{
-            axios.post(`http://localhost:2800/order`,data,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            axios.post(`/api/order`,data,{headers:{'x-auth-token':localStorage.getItem("token")}})
             .then(res=>{
+                console.log(res)
                 let options = {
                     "key_id": "rzp_test_Je0UKuTNU3Tl5d",
                     "key_secret": 'm6pQy50jytgyl2WwPFls1myo',
@@ -84,12 +86,12 @@ export default(props)=>{
                     "currency": "INR",
                     "name": `${parking.title}`,
                     "description": `${parking.city}`,
-                    "image": parking.images[0]?`http://localhost:2800/images/${parking.images[0].url}`:'',
-                    "order_id": res.data.id,
+                    "image": parking.images[0]?`/api/images/${parking.images[0].url}`:'',
+                    "order_id": res.data.result.order.id,
                     "handler": function (response){
                         let body=document.querySelector('body');
                         body.style={overflow:'scroll'};
-                        axios.put(`http://localhost:2800/order`,
+                        axios.put(`/api/order`,
                             {...data,ownerId:parking.ownerId,parking,orderId:response.razorpay_order_id,paymentId:response.razorpay_payment_id},
                             {headers:{'x-auth-token':localStorage.getItem("token")}}
                         )
@@ -151,7 +153,7 @@ export default(props)=>{
                 </div>
             <div className={styles.mainSection}>
                 <div className={styles.leftSection}>
-                    <img src={parking.images[0]?`http://localhost:2800/images/${parking.images[0].url}`:placeholderImg} width="100px" height="100px"alt="parking"/>
+                    <img src={parking.images[0]?`/api/images/${parking.images[0].url}`:placeholderImg} width="100px" height="100px"alt="parking"/>
                     <div className={styles.detailsContainer}>
                         <div className={styles.parkingTitle}>{parking.title}</div>
                         <div className={styles.parkingLocation}>{area}</div>

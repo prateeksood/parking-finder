@@ -13,8 +13,12 @@ export default (props)=>{
     const { user,setAlertMsg,userLoaded} = useContext(userContext);
     useEffect(()=>{
         if(user){
-            axios.delete(`http://localhost:2800/cleanup`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            axios.delete(`/api/cleanup/unpaid`,{headers:{'x-auth-token':localStorage.getItem("token")}})
             .then(console.log('Cleanup done'))
+            .catch(err=>console.log(err.message));
+            
+            axios.put(`/api/cleanup/inactive`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            .then(console.log('Inactive Orders marked'))
             .catch(err=>console.log(err));
         }
     },[user])
@@ -22,14 +26,14 @@ export default (props)=>{
         setIsLoading(true)
         if(user){
                 let url;
-                user.isAdmin?url=`http://localhost:2800/order`:url=`http://localhost:2800/order/findOrders?id=${user.id}`;
+                user.isAdmin?url=`/api/order`:url=`/api/order/find/all/by-user-id/${user.id}`;
                 axios.get(url)
                 .then(foundOrder=>{
-                    setOrders(prev=>[...prev,foundOrder.data]);
-                    foundOrder.data.forEach(order => {
-                        axios.get(`http://localhost:2800/parkings/${order.parkingId}`)
+                    setOrders(prev=>[...prev,foundOrder.data.result.orders]);
+                    foundOrder.data.result.orders.forEach(order => {
+                        axios.get(`/api/parkings/find/all/by-parking-id/${order.parkingId}`)
                         .then(foundParking=>{
-                            let parking=foundParking.data;
+                            let parking=foundParking.data.result.parking;
                             parking={...parking,date:new Date(order.date),total:order.totalCost,bookingSpots:order.bookingSpots,bookingTime:order.bookingTime,orderId:order.id}
                             setParkings(prev=>[...prev,parking]);
                             
@@ -63,7 +67,7 @@ export default (props)=>{
                             <Link key={index} to={`/invoice/${parking.orderId}`}>
                                 <div className={styles.card}>
                                     <div className={styles.imgHolder}>
-                                        <img src={parking.images[0]?(`http://localhost:2800/images/${parking.images[0].url}`):placeholderImg} alt="parking"/>
+                                        <img src={parking.images[0]?(`/api/images/${parking.images[0].url}`):placeholderImg} alt="parking"/>
                                     </div>
                                     <div className={styles.title}>{`${parking.title.slice(0,12)}`}{parking.title.length>13&& ' . . .'}</div>
                                     <div className={styles.location}>

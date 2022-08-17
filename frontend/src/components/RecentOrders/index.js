@@ -14,8 +14,12 @@ export default (props)=>{
     
     useEffect(()=>{
         if(user){
-            axios.delete(`http://localhost:2800/cleanup`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            axios.delete(`/api/cleanup/unpaid`,{headers:{'x-auth-token':localStorage.getItem("token")}})
             .then(console.log('Cleanup done'))
+            .catch(err=>console.log(err.message));
+            
+            axios.put(`/api/cleanup/inactive`,{headers:{'x-auth-token':localStorage.getItem("token")}})
+            .then(console.log('Inactive Orders marked'))
             .catch(err=>console.log(err));
         }
     },[user])
@@ -24,20 +28,20 @@ export default (props)=>{
         setIsLoading(true)
         if(user){
                 let url;
-                axios.get(`http://localhost:2800/parkings/owner/${user.id}`)
+                axios.get(`/api/parkings/find/all/by-owner-id/${user.id}`)
                 .then(allParkings=>{
-                    allParkings.data.forEach(parking => {
-                        user.isAdmin?url=`http://localhost:2800/order`:url=`http://localhost:2800/order/parking/${parking.id}`;
+                    allParkings.data.result.parkings.forEach(parking => {
+                        user.isAdmin?url=`/api/order`:url=`/api/order/find/all/by-parking-id/${parking.id}`;
                         axios.get(url)
                         .then(foundOrder=>{
                             setOrders(prev=>[...prev,foundOrder.data]);
-                            foundOrder.data.forEach(order => {
-                                axios.get(`http://localhost:2800/parkings/${order.parkingId}`)
+                            foundOrder.data.result.orders.forEach(order => {
+                                axios.get(`/api/parkings/find/all/by-parking-id/${order.parkingId}`)
                                 .then(foundParking=>{
-                                    let parking=foundParking.data;
-                                    axios.get(`http://localhost:2800/auth/user/${order.tenantId}`)
+                                    let parking=foundParking.data.result.parking;
+                                    axios.get(`/api/auth/user/${order.tenantId}`)
                                     .then(foundUser=>{
-                                        parking={...parking,tenant:foundUser.data.user,date:new Date(order.date),total:order.totalCost,bookingSpots:order.bookingSpots,bookingTime:order.bookingTime,orderId:order.id}
+                                        parking={...parking,tenant:foundUser.data.result.user,date:new Date(order.date),total:order.totalCost,bookingSpots:order.bookingSpots,bookingTime:order.bookingTime,orderId:order.id}
                                         setParkings(prev=>[...prev,parking]);
                                     })
                                     .catch(err=>console.log(err));
