@@ -15,7 +15,6 @@ const app=express();
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({extended:true}));
-app.use(express.static("frontend/build"));
 app.use('/api/images',express.static('images'));
 app.use('/api/auth',auth);
 app.use('/api/register',register);
@@ -26,9 +25,10 @@ app.use('/api/review',review);
 app.use('/api/uploadImg',uploadImg);
 app.use('/api/cleanup',cleanup);
 
+app.use(express.static("frontend/build"));
 app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "./frontend", "build", "index.html"));
-    console.log(path.resolve(__dirname, "./frontend", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+    console.log(path.resolve(__dirname, "frontend", "build", "index.html"));
 });
 app.listen(PORT,()=>{
     console.log(`server started at port ${PORT}`);
