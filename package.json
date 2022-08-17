@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
     "start": "node index.js",
     "backend": "nodemon app.js",
     "frontend": "npm run start --prefix ../frontend",
