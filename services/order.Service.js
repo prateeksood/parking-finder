@@ -1,7 +1,7 @@
 const orderDao=require("../dao/order.Dao")
 const nodemailer = require("nodemailer");
 const Razorpay=require('razorpay')
-
+require('dotenv').config();
 const getAllOrdersService= async (callBack)=>{
 
     try{
@@ -126,10 +126,10 @@ const findOrdersByOrderIdService= async (data,callBack)=>{
 const createOrderService= async (data,callBack)=>{
     const {tenant,parking,bookingTime,bookingSpots,total}=data;
         let instance = new Razorpay({
-            key_id: 'rzp_test_Je0UKuTNU3Tl5d',
-            key_secret: 'm6pQy50jytgyl2WwPFls1myo',
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_SECRET,
             headers: {
-            "X-Razorpay-Account": "C3E1jV2MAaFjz8"
+                "X-Razorpay-Account": "C3E1jV2MAaFjz8"
             }
         });
         instance.orders.create(
@@ -156,7 +156,10 @@ const createOrderService= async (data,callBack)=>{
             } 
 
         })
-        .catch(err=>{return callBack(err.message, 500)})
+        .catch(err=>{
+            console.log(err)
+            return callBack(err.message, 500)
+        })
 
 }
 
@@ -174,12 +177,15 @@ const confirmOrderService= async (data,callBack)=>{
             }
             else{
                 let transporter = nodemailer.createTransport({
-                    service: 'gmail',
+                    host: process.env.SMTP_SERVER,
+                    port: process.env.SMTP_PORT,
+                    secure: false,
                     auth: {
-                        user: 'parkingfinder99@gmail.com',
-                        pass: '#helloworld123'
-                    }
-                    });
+                      user: process.env.EMAIL_ID,
+                      pass: process.env.EMAIL_PASSWORD,
+                    },
+                    tls: { rejectUnauthorized: false },
+                  });
         
                     let mailOptions = {
                     from: 'parkingfinder99@gmail.com',

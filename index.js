@@ -27,8 +27,7 @@ app.use('/api/cleanup',cleanup);
 
 app.use(express.static("frontend/build"));
 app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-    console.log(path.resolve(__dirname, "frontend", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "./frontend", "build", "index.html"));
 });
 app.listen(PORT,()=>{
     console.log(`server started at port ${PORT}`);
