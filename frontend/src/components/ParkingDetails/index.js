@@ -32,12 +32,17 @@ export default(props)=>{
     let marker= new mapboxgl.Marker(markerDiv);
     const directionBox=new window.MapboxDirections({
         accessToken: mapboxgl.accessToken,
+        interactive: false,
         mapboxgl: mapboxgl,
         unit: 'metric',
         profile: 'mapbox/driving',
         controls:{
             inputs:false,
-            profileSwitcher:false}
+            profileSwitcher:false
+        },
+        congestion:true,
+
+
     });
     useEffect(()=>{
         if(user){
@@ -63,7 +68,6 @@ export default(props)=>{
         if(userLoaded){
             axios.get(`/api/parkings/find/all/by-parking-id/${id}`)
             .then(res=>{
-                console.log();
                 setParking(res.data.result.parking);
                 if(user){
                     axios.get(`/api/order/find/active/by-parking-id/${id}`)
@@ -86,7 +90,7 @@ export default(props)=>{
             const map = new mapboxgl.Map({
                 container: mapContainer,
                 style: 'mapbox://styles/mapbox/streets-v11',
-                center: [parking.lon, parking.lat],
+                center: [parking.lon+1, parking.lat+1],
                 zoom: 12
                 });
                 map.addControl(
@@ -98,7 +102,7 @@ export default(props)=>{
                     })
                     .on('result',(position)=>{
                         setOrigin(position.result.center)
-                        
+                        setCurrentLocation(position.result.center);
                     })
                     ,'top-right');
                 map.addControl(new mapboxgl.FullscreenControl(),'bottom-right');
@@ -108,20 +112,13 @@ export default(props)=>{
                 marker
                     .setLngLat([parking.lon, parking.lat])
                     .addTo(map);
-        
-                map.on('click', () => {
-                        setTimeout(()=>{
-                            if(directionBox.getDestination().geometry.coordinates!==destination){
-                                directionBox.setDestination(destination);
-                            }
-                        },300)
-                }); 
             }  
-    },[parking,isLoading,destination,user])
+    },[parking,isLoading,user])
 
     useEffect(()=>{
         directionBox.setOrigin(origin);
     },[origin])
+    
     let history=useHistory();
     const getDirections=()=>{
         setOrigin([currentLocation[0],currentLocation[1]]);
@@ -143,7 +140,7 @@ export default(props)=>{
         return <Redirect to='/login' />
     }
     if (deleted) {
-        setAlertMsg({heading:'Successfully deleted',lead:`Your parking was successfullu deleted`});
+        setAlertMsg({heading:'Successfully deleted',lead:`Your parking was successfully deleted`});
         return <Redirect to='/book' />
     }
     return(
